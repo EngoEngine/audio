@@ -29,12 +29,14 @@ func NewPlayer(src string, format int, samplesPerSecond int64) (*Player, error) 
 	player := dom.GetWindow().Document().CreateElement("audio").(*dom.HTMLAudioElement)
 	player.SetAttribute("src", src)
 	player.AddEventListener("loadeddata", false, func(ev dom.Event) {
-		duration, err := time.ParseDuration(player.Underlying().Get("duration").String() + "s")
+		//TODO: somehow save this somewhere in the player
+		_, err := time.ParseDuration(player.Underlying().Get("duration").String() + "s")
 		if err != nil {
 			log.Println("[ERROR] Failed to get audio duration: " + err.Error())
 		}
-		return &Player{player: player, duration: duration, src: src, format: format, samplesPerSecond: samplesPerSecond}, nil
 	})
+	return &Player{player: player, src: src, format: format, samplesPerSecond: samplesPerSecond}, nil
+
 }
 
 func NewSimplePlayer(src string) (*Player, error) {
