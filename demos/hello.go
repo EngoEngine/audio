@@ -14,13 +14,16 @@ func main() {
 		panic(err)
 	}
 	player.Play()
-	player.Total(false)
-	fmt.Println(player.Volume())
 
+	fmt.Println("Volume: ", player.Volume())
 	time.Sleep(time.Second * 5)
-	player.SetVolume(0.2)
-	fmt.Println(player.Volume())
 
+	fmt.Println("Setting Volume to: 0.2")
+	player.SetVolume(0.2)
+
+	fmt.Println("Volume: ", player.Volume())
+
+	player.Current()
 	if runtime.GOARCH != "js" {
 		for {
 			time.Sleep(time.Hour)

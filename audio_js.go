@@ -50,8 +50,9 @@ func (p *Player) Close() error {
 }
 
 func (p *Player) Current() time.Duration {
-	notImplemented("current")
-	return time.Now().Sub(time.Now())
+	cur := p.player.Underlying().Get("currentTime").String()
+	dur, _ := time.ParseDuration(cur + "s")
+	return dur
 }
 
 func (p *Player) Pause() error {
@@ -70,6 +71,9 @@ func (p *Player) Seek(offset time.Duration) error {
 }
 
 func (p *Player) SetVolume(vol float64) {
+	if vol > 1 {
+		vol = 1
+	}
 	p.player.Underlying().Set("volume", vol)
 }
 
