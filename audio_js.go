@@ -3,9 +3,10 @@
 package audio
 
 import (
-	"honnef.co/go/js/dom"
 	"log"
 	"time"
+
+	"honnef.co/go/js/dom"
 )
 
 type Player struct {
@@ -85,13 +86,13 @@ func (p *Player) Stop() error {
 	return nil
 }
 
-func (p *Player) Total() time.Duration {
+func (p *Player) Total(bg bool) time.Duration {
+	//TODO: Use the bg parameter
 	return p.duration
 }
 
 func (p *Player) Volume() float64 {
-	notImplemented("volume")
-	return 0
+	return p.player.Underlying().Get("volume").Float()
 }
 
 func (p *Player) Rewind() {
