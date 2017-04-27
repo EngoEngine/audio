@@ -15,6 +15,7 @@ type Player struct {
 	src              string
 	format           int
 	samplesPerSecond int64
+	Paused           bool
 }
 
 func notImplemented(msg string) {
@@ -45,11 +46,18 @@ func (p *Player) Current() time.Duration {
 
 func (p *Player) Play() error {
 	p.player.Play()
+	p.Paused = false
+	return nil
+}
+
+func (p *Player) Seek(offset time.Duration) error {
+	notImplemented("seek")
 	return nil
 }
 
 func (p *Player) Pause() error {
 	p.player.Pause()
+	p.Paused = true
 	return nil
 }
 
@@ -61,4 +69,30 @@ func (p *Player) SetVolume(volume int32) error {
 func (p *Player) Volume() int32 {
 	vol, _ := p.player.GetVolume()
 	return vol
+}
+
+func (p *Player) State() State {
+	if p.Paused {
+		return Paused
+	} else {
+		return Playing
+	}
+}
+
+func (p *Player) Stop() error {
+	notImplemented("stop")
+	return nil
+}
+
+func (p *Player) Total(bg bool) time.Duration {
+	//TODO: Use the bg parameter
+	return p.duration
+}
+
+func (p *Player) Rewind() {
+	notImplemented("rewind")
+}
+
+func (p *Player) PlaySources() {
+	notImplemented("playSources")
 }
