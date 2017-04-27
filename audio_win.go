@@ -24,9 +24,11 @@ func notImplemented(msg string) {
 
 func NewPlayer(src string, format int, samplesPerSecond int64) (*Player, error) {
 	winaudio.InitWinAudio()
-	wavfile, _ := winaudio.LoadWav(src)
+	wavfile, err := winaudio.LoadWav(src)
+	if err != nil {
+		panic(err)
+	}
 	wavfile.SetLooping(true)
-
 	return &Player{player: wavfile, src: src, format: format, samplesPerSecond: samplesPerSecond}, nil
 }
 
@@ -45,7 +47,10 @@ func (p *Player) Current() time.Duration {
 }
 
 func (p *Player) Play() error {
-	p.player.Play()
+	err := p.player.Play()
+	if err != nil {
+		panic(err)
+	}
 	p.Paused = false
 	return nil
 }
@@ -61,8 +66,8 @@ func (p *Player) Pause() error {
 	return nil
 }
 
-func (p *Player) SetVolume(volume int32) error {
-	p.player.SetVolume(volume)
+func (p *Player) SetVolume(volume float64) error {
+	p.player.SetVolume(int32(volume))
 	return nil
 }
 
