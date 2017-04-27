@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	player, err := audio.NewSimplePlayer("assets/birds.wav")
+	player, err := audio.NewSimplePlayer("assets/48hz16bit2ch.wav")
 	if err != nil {
 		panic(err)
 	}
